@@ -1,0 +1,54 @@
+name: openvpn-containers
+x-enviroment: &environments
+  HOST_ADDR: "youraddress.com"
+  HOST_PORT: "25570"
+  HOST_PROTOCOL: "udp4"
+  EASYRSA_SERVER: "/easy-rsa-server"
+  EASYRSA_CLIENT: "/easy-rsa-client"
+  OPENVPN_DIR: "/openvpn"
+services:
+  ca-machine:
+    environment:
+      <<: *environments
+    volumes:
+      - ./volumes/ca-machine/easy-rsa:/easy-rsa-server
+      - ./volumes/openvpn-machine/easy-rsa:/easy-rsa-client
+      - ./volumes/openvpn-machine/openvpn:/openvpn
+    build:
+      context: .
+      dockerfile: ./build/ca-machine/Dockerfile
+    
+  openvpn-machine:
+    build:
+      context: .
+      dockerfile: ./build/openvpn-machine/Dockerfile
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+    - NET_ADMIN
+    - MKNOD
+    networks:
+      - proxy-network
+    volumes:
+      - ./volumes/openvpn-machine/openvpn:/openvpn
+      - ./volumes/openvpn-machine/easy-rsa:/easy-rsa
+    ports:
+      - 25570:25570/udp
+      - 25571:25571/tcp
+    restart: unless-stopped
+    sysctls:
+      - net.ipv4.ip_forward=1
+  # proxy:
+  #   depends_on:
+  #     - openvpn-machine
+  #   networks:
+  #     - proxy-network
+  #   volumes:
+  #     - ./volumes/proxy:/etc/nginx/
+  #   build:
+  #     context: .
+      
+      
+networks:
+  proxy-network:
+    driver: bridge

@@ -1,0 +1,6 @@
+*.crt
+*.txt
+*.log
+*.key
+
+pki/
