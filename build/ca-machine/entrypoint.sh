@@ -4,15 +4,15 @@ set -e
 
 COMMAND=$1
 
-validCommands=("init-pki" "create-user" "gen-user-ovpn" "revokeuser" "help")
+validCommands=("init-pki" "create-user" "gen-user-ovpn")
 
 if [ -z "$COMMAND" ]; then
-    echo "Command is required"
+    echo "Command is required: ${validCommands[*]}"
     exit 1
 fi
 
 if [[ ! " ${validCommands[@]} " =~ " ${COMMAND} " ]]; then
-    echo "Invalid command"
+    echo "Invalid command, valid commands: ${validCommands[*]}"
     exit 1
 fi
 

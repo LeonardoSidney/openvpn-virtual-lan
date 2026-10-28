@@ -4,12 +4,12 @@ set -e
 
 init_pki() {
     if [ -d "$EASYRSA_SERVER/pki" ]; then
-        echo "PKI already exists please use regen-pki to generate a new one"
+        echo "PKI already exists"
         exit 1
     fi
 
     if [ -d "$EASYRSA_CLIENT/pki" ]; then
-        echo "Client PKI already exists please use regen-pki to generate a new one"
+        echo "Client PKI already exists"
         exit 1
     fi
 

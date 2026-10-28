@@ -3,18 +3,13 @@
 set -e
 
 verify_files_gen_user_ovpn() {
-    if [ -z $CLIENT_NAME ]; then
+    if [ -z "$CLIENT_NAME" ]; then
         echo "Username is required"
         exit 1
     fi
     
     if [ ! -d "$EASYRSA_SERVER/pki" ]; then
         echo "PKI does not exist please run init-pki"
-        exit 1
-    fi
-    
-    if [ ! -f "$EASYRSA_SERVER/pki/issued/$CLIENT_NAME.crt" ]; then
-        echo "Client certificate does not exist"
         exit 1
     fi
     
@@ -38,7 +33,7 @@ verify_files_gen_user_ovpn() {
         exit 1
     fi
     
-    if [ -z $HOST_ADDR ]; then
+    if [ -z "$HOST_ADDR" ]; then
         echo "Error: HOST_ADDR is required"
         exit 1
     fi
@@ -56,7 +51,7 @@ gen_user_ovpn() {
     
     echo "Generating ovpn file for client: $CLIENT_NAME"
     
-    OVPN_FILE="/$OPENVPN_DIR/client/$CLIENT_NAME.ovpn"
+    OVPN_FILE="$OPENVPN_DIR/client/$CLIENT_NAME.ovpn"
     echo "client" > $OVPN_FILE
     echo "dev tun" >> $OVPN_FILE
     echo "remote $HOST_ADDR $HOST_PORT $HOST_PROTOCOL" >> $OVPN_FILE # TODO: Support for multiples protocols

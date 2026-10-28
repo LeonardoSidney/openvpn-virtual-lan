@@ -5,17 +5,17 @@ set -e
 start_container() {
     echo "Starting container"
     
-    if [ -z $EASYRSA_SERVER ]; then
+    if [ -z "$EASYRSA_SERVER" ]; then
         echo "Easyrsa server directory is required"
         exit 1
     fi
     
-    if [ -z $EASYRSA_CLIENT ]; then
+    if [ -z "$EASYRSA_CLIENT" ]; then
         echo "Easyrsa client directory is required"
         exit 1
     fi
     
-    if [ ! -d $EASYRSA_SERVER ]; then
+    if [ ! -d "$EASYRSA_SERVER" ]; then
         echo "Easyrsa server directory is not mounted"
         exit 1
     fi
@@ -25,7 +25,7 @@ start_container() {
         exit 1
     fi
     
-    if [ ! -d $EASYRSA_CLIENT ]; then
+    if [ ! -d "$EASYRSA_CLIENT" ]; then
         echo "Easyrsa client directory is not mounted"
         exit 1
     fi
@@ -35,7 +35,7 @@ start_container() {
         exit 1
     fi
 
-    if [ ! -d $OPENVPN_DIR ]; then
+    if [ ! -d "$OPENVPN_DIR" ]; then
         echo "Openvpn directory is not mounted"
         exit 1
     fi
