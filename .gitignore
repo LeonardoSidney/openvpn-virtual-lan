@@ -4,5 +4,6 @@
 *.key
 *.ovpn
 *.req
+.env
 
 pki/

@@ -1,8 +1,10 @@
 name: openvpn-containers
-x-enviroment: &environments
-  HOST_ADDR: "youraddress.com"
-  HOST_PORT: "25570"
-  HOST_PROTOCOL: "udp4"
+x-environment: &environments
+  HOST_ADDR: "${HOST_ADDR:?missing, copy .env.example to .env}"
+  HOST_PORT: "${HOST_PORT:?missing, copy .env.example to .env}"
+  HOST_PROTOCOL: "${HOST_PROTOCOL:?missing, copy .env.example to .env}"
+  VPN_NETWORK: "${VPN_NETWORK:?missing, copy .env.example to .env}"
+  VPN_NETMASK: "${VPN_NETMASK:?missing, copy .env.example to .env}"
   EASYRSA_SERVER: "/easy-rsa-server"
   EASYRSA_CLIENT: "/easy-rsa-client"
   OPENVPN_DIR: "/openvpn"
@@ -19,6 +21,8 @@ services:
       dockerfile: ./build/ca-machine/Dockerfile
     
   openvpn-machine:
+    environment:
+      <<: *environments
     build:
       context: .
       dockerfile: ./build/openvpn-machine/Dockerfile
@@ -33,8 +37,8 @@ services:
       - ./volumes/openvpn-machine/openvpn:/openvpn
       - ./volumes/openvpn-machine/easy-rsa:/easy-rsa
     ports:
-      - 25570:25570/udp
-      - 25571:25571/tcp
+      - ${HOST_PORT:?missing, copy .env.example to .env}:1194/udp
+      - ${HOST_PORT:?missing, copy .env.example to .env}:1194/tcp
     restart: unless-stopped
     sysctls:
       - net.ipv4.ip_forward=1
