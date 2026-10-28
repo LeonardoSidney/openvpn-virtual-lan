@@ -103,4 +103,4 @@ Logs, connection status and the IP pool (`ipp.txt`) are written to `volumes/open
 
 ## License
 
-GPL-3.0
+AGPL-3.0
