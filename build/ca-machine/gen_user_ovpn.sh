@@ -88,8 +88,6 @@ gen_user_ovpn() {
     cat $TA_KEY >> $OVPN_FILE
     echo "</tls-auth>" >> $OVPN_FILE
 
-    echo EOF >> $OVPN_FILE
-
     echo "OVPN file generated: $OVPN_FILE"
 
     exit 0
