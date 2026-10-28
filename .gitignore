@@ -2,5 +2,7 @@
 *.txt
 *.log
 *.key
+*.ovpn
+*.req
 
 pki/
