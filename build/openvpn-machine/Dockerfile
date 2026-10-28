@@ -1,10 +1,8 @@
-FROM alpine:latest
+FROM alpine:3.24
 
 WORKDIR /root
 
-RUN apk add --no-cache openvpn easy-rsa curl zsh openssl git bash iptables
-
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN apk add --no-cache openvpn bash iptables
 
 COPY build/openvpn-machine/start.sh start.sh
 COPY build/openvpn-machine/entrypoint.sh entrypoint.sh

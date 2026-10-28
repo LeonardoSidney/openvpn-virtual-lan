@@ -20,8 +20,8 @@ verify_environment() {
 
 verify_dir() {
     if [ ! -c /dev/net/tun ]; then
-        mkdir -p /dev/net
-        mknod /dev/net/tun c 10 200
+        echo "Device /dev/net/tun not found."
+        exit 1
     fi
 
     if [ ! -d "/easy-rsa/pki" ]; then
