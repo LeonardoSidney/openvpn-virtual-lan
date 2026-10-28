@@ -4,7 +4,7 @@ set -e
 
 COMMAND=$1
 
-validCommands=("init-pki" "create-user" "gen-user-ovpn")
+validCommands=("init-pki" "create-server" "create-user" "gen-user-ovpn")
 
 if [ -z "$COMMAND" ]; then
     echo "Command is required: ${validCommands[*]}"
@@ -18,6 +18,7 @@ fi
 
 source start.sh
 source init_pki.sh
+source create_server.sh
 source create_user.sh
 source gen_user_ovpn.sh
 
@@ -28,6 +29,11 @@ export EASYRSA_VARS_FILE="$EASYRSA_SERVER/vars"
 
 if [ "$COMMAND" == "init-pki" ]; then
     init_pki
+    exit 0
+fi
+
+if [ "$COMMAND" == "create-server" ]; then
+    create_server
     exit 0
 fi
 
